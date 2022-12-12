@@ -20,26 +20,29 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ExportUser implements FromArray,WithHeadings
-{
-    protected $user;
-
+{ 
+   
     public function __construct(array $user)
     {
-        $this->invoices = $user;
+        $this->invoices = $user;  
     }
-
     public function array(): array
     {
-        return $this->invoices;
-        error_log('dd');
-        
+        return $this->invoices;  
     }
-  
     public function headings(): array
     {
-        return ["your", "headings", "here"];
-        // return array_keys($this->invoices[0][0]->toArray());
-        // return $this->invoices;
+    // for non-dynamic heading use following method(for both eloqunt and query builder method)
+        // return [" your  ", "headings", "here"];
+
+    // if you are using eloquent query method to fetch details use following method for  dynamic heading
+        // return array_keys( $this->invoices[0][0]->toArray());
+
+    // if you are using query builder method to fetch details use following method for dynamic heading
+        foreach($this->invoices[0] as $key => $value) {
+            $heading[] = $key ;
+        }
+        return $heading;   
     }
    
 }
